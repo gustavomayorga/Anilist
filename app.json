@@ -1,33 +1,44 @@
 {
-  "expo": {
-    "name": "teste",
-    "slug": "teste",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+  "expo": {"name": "anilist",
+  "slug": "anilist",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./assets/icon.png",
+  "userInterfaceStyle": "light",
+  "assetBundlePatterns": [
+    "**/*"
+  ],
+  "sdkVersion": "46.0.0",
+  "platforms": [
+    "ios",
+    "android",
+    "web"
+  ],
+  "splash": {
+    "image": "./assets/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#ffffff"
+  },
+  "updates": {
+    "fallbackToCacheTimeout": 0
+  },
+  "ios": {
+    "supportsTablet": true
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#FFFFFF"
     }
-  }
+  },
+  "web": {
+    "favicon": "./assets/favicon.png"
+  },
+  "_internal": {
+    "isDebug": false,
+    "projectRoot": "/home/loiz/git/mobile/react-native/teste",
+    "dynamicConfigPath": null,
+    "staticConfigPath": "/home/loiz/git/mobile/react-native/teste/app.json",
+    "packageJsonPath": "/home/loiz/git/mobile/react-native/teste/package.json"
+   } }
 }
