@@ -9,20 +9,22 @@ const Stack = createStackNavigator();
 
 import palleta from "../utils/Palleta";
 import CriarItem from "./CriarItem";
+import Lista from "./Lista";
 
 const ItemNavigation = ({ iconName, qtdLista, nomeLista, proxPagina }) => {
   return (
     <View style={styles.itensNavigation}>
       <View style={styles.teste}>
         <Avatar.Icon size={40} icon={iconName} style={styles.icones} />
-        <Text> {qtdLista} </Text>
-        <Text> {nomeLista} </Text>
+        <Text style={styles.textoPadrao}> {qtdLista} </Text>
+        <Text style={styles.textoPadrao}> {nomeLista} </Text>
       </View>
       <IconButton
         icon="chevron-right"
         size={30}
         onPress={proxPagina}
         style={styles.iconesButtons}
+        iconColor={palleta.textoCor}
       />
     </View>
   );
@@ -30,10 +32,10 @@ const ItemNavigation = ({ iconName, qtdLista, nomeLista, proxPagina }) => {
 
 const Menu = ({ navigation }) => {
   const [nickname, setNickname] = useState("");
+  const [lengthListaAssistidos, setlengthListaAssistidos] = useState(0);
 
   useEffect(() => {
     getData();
-    
   }, []);
 
   // const getData = () => {
@@ -50,11 +52,17 @@ const Menu = ({ navigation }) => {
 
   const getData = async () => {
     const value = await AsyncStorage.getItem("UserName");
+    const lengthListaAssistidos = await AsyncStorage.getItem("Assistidos");
     if (value != null) {
       setNickname(value);
     } else {
       setNickname("vazio");
-    };
+    }
+    if (lengthListaAssistidos != null) {
+      setlengthListaAssistidos(JSON.parse(lengthListaAssistidos).length);
+    } else {
+      console.log("null lista");
+    }
     console.log("terminou");
   };
 
@@ -63,7 +71,7 @@ const Menu = ({ navigation }) => {
   };
 
   pressHandler = () => {
-    navigation.navigate("Teste");
+    navigation.navigate("Lista");
   };
   return (
     <View style={styles.body}>
@@ -73,27 +81,27 @@ const Menu = ({ navigation }) => {
           size={150}
           source={require("../../assets/images/Tenshi.webp")}
         />
-        <Text>{nickname}</Text>
+        <Text style={styles.titulo}>{nickname}</Text>
         <View style={styles.cardNavigation}>
           <ItemNavigation
             iconName="eye"
-            qtdLista={329}
+            qtdLista={lengthListaAssistidos}
             nomeLista="Assistidos"
             proxPagina={pressHandler}
           ></ItemNavigation>
           <ItemNavigation
             iconName="heart"
-            qtdLista={12}
+            qtdLista={0}
             nomeLista="Favoritos"
           ></ItemNavigation>
           <ItemNavigation
             iconName="format-list-bulleted"
-            qtdLista={14}
+            qtdLista={0}
             nomeLista="Lista"
           ></ItemNavigation>
           <ItemNavigation
             iconName="delete"
-            qtdLista={2}
+            qtdLista={0}
             nomeLista="Drop"
           ></ItemNavigation>
         </View>
@@ -105,14 +113,6 @@ const Menu = ({ navigation }) => {
         style={styles.iconButton}
         onPress={onPressHandler}
       ></IconButton>
-    </View>
-  );
-};
-
-const Teste = () => {
-  return (
-    <View>
-      <Text>TESTE</Text>
     </View>
   );
 };
@@ -151,21 +151,31 @@ export default function Perfil({ navigation, route }) {
               onPress={() => navigation.goBack()}
             />
           ),
-          headerRight: () => (
-            <IconButton
-              icon="check"
-              iconColor={palleta.textoCor}
-              onPress={() => navigation.goBack()}
-            />
-          ),
+          // headerRight: () => (
+          //   <IconButton
+          //     icon="check"
+          //     iconColor={palleta.textoCor}
+          //     onPress={() => navigation.goBack()}
+          //     disabled={true}
+          //   />
+          // ),
         }}
       />
-      <Stack.Screen name="Teste" component={Teste} />
+      <Stack.Screen name="Lista" component={Lista} />
     </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
+  titulo: {
+    color: palleta.textoCor,
+    fontSize: 20,
+    marginTop: 5,
+  },
+  textoPadrao: {
+    color: palleta.textoCor,
+    fontSize: 15,
+  },
   card: {
     paddingTop: 30,
     paddingBottom: 30,
@@ -208,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconButton: {
-    top: "5%",
+    top: "4%",
     backgroundColor: palleta.primary,
   },
 });

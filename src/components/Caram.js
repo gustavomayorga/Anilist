@@ -1,7 +1,6 @@
 import {
   Button,
   Dialog,
-  Divider,
   Portal,
   Provider,
   Text,
@@ -10,7 +9,7 @@ import { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import palleta from "../utils/Palleta";
 
-export default function Caram() {
+export default function Caram({handleClick}) {
   const [visible, setVisible] = useState(false);
   const [value, setValue] = useState("Assistidos");
 
@@ -20,6 +19,7 @@ export default function Caram() {
 
   const helperDialog = (lValue) => {
     setValue(lValue);
+    handleClick(lValue);
     hideDialog();
   };
   return (
@@ -31,10 +31,10 @@ export default function Caram() {
             textColor={palleta.textoCor}
             style={styles.buttonTeste}
             onPress={showDialog}
-            icon={{ source: "chevron-down", direction: "auto" }}
+            icon="chevron-down"
             contentStyle={{ flexDirection: "row-reverse" }}
           >
-            <Text>{value}</Text>
+            <Text style={{color: palleta.textoCor, fontSize: 14 }}>{value}</Text>
           </Button>
           <Portal>
             <Dialog
@@ -43,23 +43,14 @@ export default function Caram() {
               onDismiss={hideDialog}
             >
               <Dialog.Actions style={{ flexDirection: "column" }}>
-                <View style={{
-                  borderRadius: 3,
-                  borderColor: "blue",
-                  borderWidth: 2,
-                  width: 120,
-                  height: 50,
-                  backgroundColor: "red",
-                  
-                }} >
-                  <Button
-                    textColor={palleta.textoCor}
-                    style={styles.buttonDialog}
-                    onPress={() => helperDialog("Assistidos")}
-                  >
-                    <Text style={styles.textoPadrao}>Assistidos</Text>
-                  </Button>
-                </View>
+                <Button
+                  textColor={palleta.textoCor}
+                  style={styles.buttonDialog}
+                  onPress={() => helperDialog("Assistidos")}
+                >
+                  <Text style={styles.textoPadrao}>Assistidos</Text>
+                </Button>
+
                 <Button
                   textColor={palleta.textoCor}
                   style={styles.buttonDialog}
@@ -67,6 +58,7 @@ export default function Caram() {
                 >
                   <Text style={styles.textoPadrao}>Favoritos</Text>
                 </Button>
+
                 <Button
                   textColor={palleta.textoCor}
                   style={styles.buttonDialog}
@@ -74,6 +66,7 @@ export default function Caram() {
                 >
                   <Text style={styles.textoPadrao}>Assistindo</Text>
                 </Button>
+
                 <Button
                   textColor={palleta.textoCor}
                   style={styles.buttonDialog}

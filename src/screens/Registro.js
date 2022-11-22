@@ -1,31 +1,26 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import {
-  IconButton,
-  TextInput,
-  HelperText,
-} from "react-native-paper";
+import { IconButton, TextInput, HelperText } from "react-native-paper";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import palleta from "../utils/Palleta";
-
-
 
 const Stack = createStackNavigator();
 
 const Nickname = ({ navigation }) => {
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
+  const [testando, setTestando] = useState("UserName");
 
   const onPressHandler = async () => {
     if (name == "") {
       setError(true);
     } else {
       try {
-        await AsyncStorage.setItem("UserName", name);
-        navigation.navigate("FotoPerfil", { Usuario: name });
+        await AsyncStorage.setItem(testando, name);
+        navigation.navigate("Perfil", { Usuario: name });
       } catch (error) {
         setError(true);
       }
@@ -60,8 +55,8 @@ const Nickname = ({ navigation }) => {
 const FotoPerfil = ({ navigation, route }) => {
   const { Usuario } = route.params;
 
-  const onPressHandler = () => {
-    navigation.goBack("Perfil", { Nickname: Usuario });
+  const testando = () => {
+    navigation.navigate("Perfil", { Nickname: Usuario });
   };
 
   return (
@@ -80,33 +75,29 @@ const FotoPerfil = ({ navigation, route }) => {
         icon="chevron-right"
         iconColor={palleta.textoCor}
         size={palleta.sizeIconsButtons}
-        onPress={onPressHandler}
+        onPress={testando}
       />
     </View>
   );
 };
 
 export default function Registro({ navigation, route }) {
-
   useEffect(() => {
     getData();
   }, []);
 
   const getData = () => {
     try {
-      
       AsyncStorage.getItem("UserName").then((value) => {
-        console.log(value)
+        console.log(value);
         if (value != null) {
           navigation.navigate("Perfil");
-          
         }
       });
     } catch (error) {
       console.log(error);
-    } 
+    }
   };
-
 
   return (
     <Stack.Navigator
